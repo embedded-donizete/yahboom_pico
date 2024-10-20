@@ -8,47 +8,51 @@ MovementController::MovementController() : R_A(PinName::p10),
 {
 }
 
+static inline void set_pair_pwm(mbed::PwmOut &a, mbed::PwmOut &b, float value)
+{
+    value *= .2;
+    if (value > 0)
+    {
+        a.write(value);
+        b.write(0);
+        return;
+    }
+    if (value < 0)
+    {
+        a.write(0);
+        b.write(-value);
+        return;
+    }
+    a.write(0);
+    b.write(0);
+}
+
 void MovementController::forward()
 {
-    this->R_A.write(1);
-    this->R_B.write(0);
-
-    this->L_A.write(1);
-    this->L_B.write(0);
+    set_pair_pwm(R_A, R_B, 1);
+    set_pair_pwm(L_A, L_B, 1);
 }
 
 void MovementController::backward()
 {
-    this->R_A.write(0);
-    this->R_B.write(1);
-
-    this->L_A.write(0);
-    this->L_B.write(1);
+    set_pair_pwm(R_A, R_B, -1);
+    set_pair_pwm(L_A, L_B, -1);
 }
 
 void MovementController::right()
 {
-    this->R_A.write(0);
-    this->R_B.write(1);
-
-    this->L_A.write(1);
-    this->L_B.write(0);
+    set_pair_pwm(R_A, R_B, -1);
+    set_pair_pwm(L_A, L_B, 1);
 }
 
 void MovementController::left()
 {
-    this->R_A.write(1);
-    this->R_B.write(0);
-
-    this->L_A.write(0);
-    this->L_B.write(1);
+    set_pair_pwm(R_A, R_B, 1);
+    set_pair_pwm(L_A, L_B, -1);
 }
 
 void MovementController::stop()
 {
-    this->R_A.write(0);
-    this->R_B.write(0);
-
-    this->L_A.write(0);
-    this->L_B.write(0);
+    set_pair_pwm(R_A, R_B, 0);
+    set_pair_pwm(L_A, L_B, 0);
 }

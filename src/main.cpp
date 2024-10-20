@@ -13,7 +13,6 @@ void setup()
 void loop()
 {
   IRController::Value value = irController.getValue();
-  Serial.println(value);
   switch (value)
   {
   case IRController::Value::Right:
@@ -28,7 +27,8 @@ void loop()
   case IRController::Value::Down:
     movementController.backward();
     break;
+  case IRController::Value::None:
+    movementController.stop();
+    break;
   }
-  delay(5);
-  movementController.stop();
 }
