@@ -2,8 +2,9 @@
 
 MovementController::MovementController() : R_A(PinName::p10),
                                            R_B(PinName::p11),
-                                           L_A(PinName::p12),
-                                           L_B(PinName::p13)
+                                           L_A(PinName::p13),
+                                           L_B(PinName::p12)
+
 {
 }
 
